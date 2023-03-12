@@ -16,7 +16,11 @@ public enum ErrorCode {
 
     ADMIN_NOT_ACCESSIBLE(403, "Don't have permission"),
 
+    NO_PERMISSION_TO_ACCESS(403, "No Permission To Access"),
+
     USER_NOT_FOUND(404, "User Not Found"),
+
+    SUBJECT_NOT_FOUND(404, "Subject Not Found"),
 
     NOTICE_NOT_FOUND(404, "Notice Not Found"),
 
@@ -27,6 +31,9 @@ public enum ErrorCode {
     REFRESH_TOKEN_NOT_FOUND(404, "RefreshToken Not Found"),
 
     EMAIL_EXIST(409, "Email Exist"),
+
+    SUBJECT_EXISTS(409, "Subject Exists"),
+
 
     INTERNAL_SERVER_ERROR(500, "Internal Server Error");
 
