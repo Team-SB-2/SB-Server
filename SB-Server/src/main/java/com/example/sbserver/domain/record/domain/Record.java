@@ -24,10 +24,13 @@ public class Record extends BaseTimeEntity {
     private LocalDateTime startedTime;
 
     @Column(nullable = false)
-    private LocalDateTime finishiedTime;
+    private LocalDateTime finishedTime;
 
     @Column(nullable = false)
-    private LocalDateTime timeAmount;
+    private Long total;
+
+    @Column(length = 20, nullable = false)
+    private String memo;
 
     @JoinColumn(name = "subject_id", nullable = false)
     @ManyToOne(fetch = FetchType.LAZY)
@@ -38,10 +41,11 @@ public class Record extends BaseTimeEntity {
     private User user;
 
     @Builder
-    public Record(LocalDateTime startedTime, LocalDateTime finishiedTime, LocalDateTime timeAmount, Subject subject, User user) {
+    public Record(LocalDateTime startedTime, LocalDateTime finishedTime, Long total, String memo, Subject subject, User user) {
         this.startedTime = startedTime;
-        this.finishiedTime = finishiedTime;
-        this.timeAmount = timeAmount;
+        this.finishedTime = finishedTime;
+        this.total = total;
+        this.memo = memo;
         this.subject = subject;
         this.user = user;
     }
