@@ -20,7 +20,7 @@ public class Subject {
     @Column(length = 15, nullable = false)
     private String title;
 
-    @ColumnDefault("U+1F525")
+    @ColumnDefault("'U+1F525'")
     @Column(length = 8, nullable = false)
     private String emoji;
 
