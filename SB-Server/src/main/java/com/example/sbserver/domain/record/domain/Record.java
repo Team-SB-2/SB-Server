@@ -27,7 +27,7 @@ public class Record extends BaseTimeEntity {
     private LocalDateTime finishedTime;
 
     @Column(nullable = false)
-    private Long total;
+    private Integer total;
 
     @Column(length = 20, nullable = false)
     private String memo;
@@ -41,7 +41,7 @@ public class Record extends BaseTimeEntity {
     private User user;
 
     @Builder
-    public Record(LocalDateTime startedTime, LocalDateTime finishedTime, Long total, String memo, Subject subject, User user) {
+    public Record(LocalDateTime startedTime, LocalDateTime finishedTime, Integer total, String memo, Subject subject, User user) {
         this.startedTime = startedTime;
         this.finishedTime = finishedTime;
         this.total = total;
