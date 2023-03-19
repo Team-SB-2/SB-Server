@@ -15,8 +15,6 @@ public class UpdateUserInfoRequest {
     @Size(max = 10, message = "name은 10자 이내여야 합니다.")
     private String name;
 
-    @NotBlank(message = "age는 Null 또는 공백을 허용하지 않습니다.")
-    @Size(max = 3, message = "age는 3자 이내여야 합니다")
     private Integer age;
 
     private Sex sex;
