@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
 
 @RequiredArgsConstructor
@@ -33,9 +35,14 @@ public class CreateRecordService {
                         .startedTime(request.getStartedTime())
                         .finishedTime(request.getFinishedTime())
                         .subject(subject)
-                        .total(r)
+                        .total(getDifference(request.getStartedTime(), request.getFinishedTime()))
                         .user(user)
                         .build()
         );
+    }
+
+    private int getDifference(LocalDateTime dateTime1, LocalDateTime dateTime2) {
+        long nanoSecondDiff = ChronoUnit.SECONDS.between(dateTime1, dateTime1);
+        return Math.abs((int) nanoSecondDiff);
     }
 }
