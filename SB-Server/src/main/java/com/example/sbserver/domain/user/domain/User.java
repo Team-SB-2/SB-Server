@@ -1,5 +1,7 @@
 package com.example.sbserver.domain.user.domain;
 
+import com.example.sbserver.domain.record.domain.Record;
+import com.example.sbserver.domain.subject.domain.Subject;
 import com.example.sbserver.global.entity.BaseTimeEntity;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -7,6 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -34,6 +37,12 @@ public class User extends BaseTimeEntity {
     @Column(length = 24, nullable = false)
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    @OneToMany(mappedBy = "user")
+    private List<Subject> subjectList;
+
+    @OneToMany(mappedBy = "user")
+    private List<Record> recordList;
 
     @Builder
     public User(String email, String name, String password, Integer age, Sex sex) {
