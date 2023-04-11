@@ -23,9 +23,6 @@ public class SignUpRequest {
     @Size(max = 10, message = "name은 10자 이내여야 합니다.")
     private String name;
 
-    @NotBlank(message = "device_token은 Null, 공백, 띄어쓰기를 허용하지 않습니다.")
-    private String deviceToken;
-
     private Integer age;
 
     private Sex sex;
