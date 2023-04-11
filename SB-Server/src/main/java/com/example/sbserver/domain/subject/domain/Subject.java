@@ -35,7 +35,7 @@ public class Subject {
     @Builder
     public Subject(String title, String emoji, User user) {
         this.title = title;
-        this.emoji = emoji;
+        this.emoji = emoji == null ? "🔥" : emoji;
         this.isViewable = true;
         this.user = user;
     }
