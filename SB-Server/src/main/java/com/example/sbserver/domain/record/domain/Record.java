@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-public class Record extends BaseTimeEntity {
+public class Record {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,7 +29,7 @@ public class Record extends BaseTimeEntity {
     @Column(nullable = false)
     private Integer total;
 
-    @Column(length = 20, nullable = false)
+    @Column(length = 20)
     private String memo;
 
     @JoinColumn(name = "subject_id", nullable = false)
