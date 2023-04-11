@@ -16,6 +16,5 @@ public class CreateRecordRequest {
     @NotBlank(message = "finished_time은 앞글자 띄어쓰기, Null을 허용하지 않습니다")
     private LocalDateTime finishedTime;
 
-    @NotBlank(message = "memo는 앞글자 띄어쓰기, Null을 허용하지 않습니다")
     private String memo;
 }
