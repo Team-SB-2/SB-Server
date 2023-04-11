@@ -29,7 +29,8 @@ public class CustomRecordRepositoryImpl implements CustomRecordRepository {
                 .from(record)
                 .innerJoin(record.subject, subject)
                 .innerJoin(record.user, QUser.user)
-                .where(record.finishedTime.between(date.atStartOfDay(), date.plusDays(1).atStartOfDay().minusNanos(1)))
+                .where(record.finishedTime.between(date.atStartOfDay(), date.plusDays(1).atStartOfDay().minusNanos(1))
+                        .and(record.user.eq(user)))
                 .fetch();
     }
 

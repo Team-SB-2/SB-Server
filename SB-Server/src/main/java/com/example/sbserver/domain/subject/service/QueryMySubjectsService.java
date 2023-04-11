@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,12 +26,14 @@ public class QueryMySubjectsService {
 
         return subjects.stream().map(
                         subject -> QuerySubjectResponse.builder()
-                                .postId(subject.getPostId())
+                                .postId(subject.getSubjectId())
                                 .title(subject.getTitle())
                                 .emoji(subject.getEmoji())
                                 .userId(subject.getUserId())
+                                .todayRecord(subject.getTodayRecord())
                                 .build()
                 )
                 .collect(Collectors.toList());
     }
 }
+
