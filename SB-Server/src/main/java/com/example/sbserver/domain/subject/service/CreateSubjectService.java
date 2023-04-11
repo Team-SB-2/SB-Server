@@ -28,14 +28,14 @@ public class CreateSubjectService {
                 throw SubjectExistsException.EXCEPTION;
             }
             subject.updateIsViewable(true);
+        } else {
+            subjectRepository.save(
+                    Subject.builder()
+                            .title(request.getTitle())
+                            .emoji(request.getEmoji())
+                            .user(user)
+                            .build()
+            );
         }
-
-        subjectRepository.save(
-                Subject.builder()
-                        .title(request.getTitle())
-                        .emoji(request.getEmoji())
-                        .user(user)
-                        .build()
-        );
     }
 }
