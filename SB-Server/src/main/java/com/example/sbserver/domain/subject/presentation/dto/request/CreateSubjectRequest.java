@@ -14,6 +14,5 @@ public class CreateSubjectRequest {
     @Size(min = 1, max = 20, message = "title은 1~20글자 이내여야 합니다")
     private String title;
 
-    @NotBlank(message = "emoji는 앞글자 띄어쓰기, Null을 허용하지 않습니다")
     private String emoji;
 }
