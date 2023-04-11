@@ -34,6 +34,9 @@ public class User extends BaseTimeEntity {
     @Column(length = 6, nullable = false)
     private Sex sex;
 
+    @Column(name = "app_device_token")
+    private String deviceToken;
+
     @Column(length = 24, nullable = false)
     @Enumerated(EnumType.STRING)
     private Role role;
@@ -45,18 +48,23 @@ public class User extends BaseTimeEntity {
     private List<Record> recordList;
 
     @Builder
-    public User(String email, String name, String password, Integer age, Sex sex) {
+    public User(String email, String name, String password, Integer age, String deviceToken, Sex sex) {
         this.email = email;
         this.name = name;
         this.password = password;
         this.age = age;
         this.sex = sex;
         this.role = Role.USER;
+        this.deviceToken = deviceToken;
     }
 
     public void update(String name, Integer age, Sex sex) {
         this.name = name;
         this.age = age;
         this.sex = sex;
+    }
+
+    public void setDeviceToken(String deviceToken) {
+        this.deviceToken = deviceToken;
     }
 }

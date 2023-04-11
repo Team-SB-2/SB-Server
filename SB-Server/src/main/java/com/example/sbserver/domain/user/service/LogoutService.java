@@ -17,6 +17,7 @@ public class LogoutService {
     @Transactional
     public void execute() {
         User user = userFacade.getCurrentUser();
+        user.setDeviceToken(null);
         refreshTokenRepository.deleteById(user.getEmail());
     }
 }
