@@ -3,9 +3,9 @@ name: jdk-17-ci
 on:
   push:
     branches:
-      - main
+      - master
   pull_request:
-    branches: [ main ]
+    branches: [ master ]
 
 jobs:
   CI:
