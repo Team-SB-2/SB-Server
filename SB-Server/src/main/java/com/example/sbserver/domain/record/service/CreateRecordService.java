@@ -42,7 +42,7 @@ public class CreateRecordService {
     }
 
     private int getDifference(LocalDateTime dateTime1, LocalDateTime dateTime2) {
-        long nanoSecondDiff = ChronoUnit.SECONDS.between(dateTime1, dateTime1);
+        long nanoSecondDiff = ChronoUnit.SECONDS.between(dateTime1, dateTime2);
         return Math.abs((int) nanoSecondDiff);
     }
 }
