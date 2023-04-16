@@ -26,7 +26,7 @@ public class QueryMySubjectsService {
 
         return subjects.stream().map(
                         subject -> QuerySubjectResponse.builder()
-                                .postId(subject.getSubjectId())
+                                .id(subject.getSubjectId())
                                 .title(subject.getTitle())
                                 .emoji(subject.getEmoji())
                                 .userId(subject.getUserId())

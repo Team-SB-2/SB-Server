@@ -6,8 +6,9 @@ import lombok.Getter;
 @Getter
 @Builder
 public class QuerySubjectResponse {
-    private final Long postId;
+    private final Long id;
     private final String title;
     private final String emoji;
     private final Long userId;
+    private final int todayRecord;
 }
