@@ -36,6 +36,7 @@ public class CreateRecordService {
                         .finishedTime(request.getFinishedTime())
                         .subject(subject)
                         .total(getDifference(request.getStartedTime(), request.getFinishedTime()))
+                        .memo(request.getMemo())
                         .user(user)
                         .build()
         );
