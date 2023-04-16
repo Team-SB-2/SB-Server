@@ -42,7 +42,3 @@ dependencies {
 			"com.querydsl:querydsl-apt:5.0.0:jpa",
 			'jakarta.persistence:jakarta.persistence-api')
 }
-
-tasks.named('test') {
-	useJUnitPlatform()
-}
