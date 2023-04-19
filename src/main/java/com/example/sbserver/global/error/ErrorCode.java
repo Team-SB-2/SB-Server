@@ -6,6 +6,9 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum ErrorCode {
+    RECORD_OUT_OF_RANGE(400, "Record Out of Range"),
+    RECORD_DEADLINE_EXCEED(400, "Should be uploaded before 5AM"),
+
     PASSWORD_MISMATCH(401, "Password Mismatch"),
 
     EXPIRED_JWT(401, "Expired Jwt"),

@@ -25,10 +25,14 @@ public class CustomRecordRepositoryImpl implements CustomRecordRepository {
 
     @Override
     public List<RecordVo> findByFinishedDateAndUser(LocalDate date, User user) {
+        LocalDateTime startDate = date.atTime(5, 0, 0);
+        LocalDateTime endDate = startDate.plusDays(1);
+
         return jpaQueryFactory.select(new QRecordVo(record, subject))
                 .from(record)
-                .innerJoin(record.subject, subject)
-                .where(record.finishedTime.between(date.atStartOfDay(), date.plusDays(1).atStartOfDay().minusNanos(1))
+                .leftJoin(subject).on(record.subject.eq(subject))
+                .leftJoin(QUser.user).on(record.user.eq(QUser.user))
+                .where(record.finishedTime.between(startDate, endDate.minusNanos(1))
                         .and(record.user.eq(user)))
                 .fetch();
     }
