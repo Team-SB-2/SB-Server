@@ -25,8 +25,6 @@ import java.util.Date;
 @Service
 public class CreateRecordService {
     private static final int TIME_RANGE = 86399;
-    private static final LocalDateTime STANDARD_TIME = LocalDate.now().atTime(5, 0);
-
     private final RecordRepository recordRepository;
     private final SubjectRepository subjectRepository;
     private final UserFacade userFacade;
@@ -62,8 +60,9 @@ public class CreateRecordService {
     }
 
     private void checkIsRecordWithinTimeRange(LocalDateTime startedTime, LocalDateTime finishedTime) {
+        LocalDateTime standardTime = LocalDateTime.of(finishedTime.toLocalDate(), LocalTime.of(5, 0, 0));
 
-        if (startedTime.isBefore(STANDARD_TIME) && finishedTime.isAfter(STANDARD_TIME)) {
+        if (startedTime.isBefore(standardTime) && finishedTime.isAfter(standardTime)) {
             throw RecordDeadLineExceedException.EXCEPTION;
         }
     }
