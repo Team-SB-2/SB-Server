@@ -30,7 +30,7 @@ public class QueryFocusGraphService {
                 (int) ((float)thisFocusedTime / (float)lastFocusedTime * 100) : 0;
 
         Integer increasedTime = isThisFocusedTimeBig?
-                thisFocusedTime - lastFocusedTime : 0;
+                (thisFocusedTime - lastFocusedTime) / 1000  : 0;
 
         return QueryFocusGraphResponse.builder()
                 .thisMonth(today.getMonth())
