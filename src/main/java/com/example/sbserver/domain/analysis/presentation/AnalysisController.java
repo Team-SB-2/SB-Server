@@ -1,6 +1,8 @@
-package com.example.sbserver.domain.analysis.presentation.dto;
+package com.example.sbserver.domain.analysis.presentation;
 
+import com.example.sbserver.domain.analysis.presentation.dto.response.QueryFocusGraphResponse;
 import com.example.sbserver.domain.analysis.presentation.dto.response.QueryFocusTimeListResponse;
+import com.example.sbserver.domain.analysis.service.QueryFocusGraphService;
 import com.example.sbserver.domain.analysis.service.QueryFocusTimeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -16,9 +18,15 @@ import java.time.YearMonth;
 @RequestMapping("/analysis")
 public class AnalysisController {
     private final QueryFocusTimeService queryFocusTimeService;
+    private final QueryFocusGraphService queryFocusGraphService;
 
     @GetMapping
     public QueryFocusTimeListResponse queryFocusTimeList(@RequestParam @DateTimeFormat(pattern = "yyyy-MM") YearMonth yearMonth) {
         return queryFocusTimeService.execute(yearMonth);
+    }
+
+    @GetMapping("/graph")
+    public QueryFocusGraphResponse queryFocusGraph() {
+        return queryFocusGraphService.execute();
     }
 }
