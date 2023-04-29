@@ -1,12 +1,12 @@
 package com.example.sbserver.domain.record.domain.repository;
 
-import com.example.sbserver.domain.record.domain.Record;
 import com.example.sbserver.domain.record.domain.repository.vo.FocusVo;
 import com.example.sbserver.domain.record.domain.repository.vo.QRecordVo;
 import com.example.sbserver.domain.record.domain.repository.vo.QFocusVo;
 import com.example.sbserver.domain.record.domain.repository.vo.RecordVo;
 import com.example.sbserver.domain.user.domain.QUser;
 import com.example.sbserver.domain.user.domain.User;
+import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 
@@ -46,5 +46,14 @@ public class CustomRecordRepositoryImpl implements CustomRecordRepository {
                 .where(record.user.eq(user), record.finishedTime.between(yearMonth.atDay(1).atStartOfDay(),
                         yearMonth.atEndOfMonth().atTime(LocalTime.MAX)))
                 .fetch();
+    }
+
+    @Override
+    public Integer findFocusedTimeByLocalDateAndUser(LocalDateTime localDateTime, User user) {
+        return jpaQueryFactory.select(record.total.sum())
+                .from(record)
+                .where(record.user.eq(user)
+                        .and(record.finishedTime.between(localDateTime, localDateTime.minusDays(30))))
+                .fetchOne();
     }
 }
