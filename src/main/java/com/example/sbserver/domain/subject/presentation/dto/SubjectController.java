@@ -1,7 +1,7 @@
 package com.example.sbserver.domain.subject.presentation.dto;
 
 import com.example.sbserver.domain.subject.presentation.dto.request.CreateSubjectRequest;
-import com.example.sbserver.domain.subject.presentation.dto.response.QuerySubjectResponse;
+import com.example.sbserver.domain.subject.presentation.dto.response.QuerySubjectListResponse;
 import com.example.sbserver.domain.subject.service.CreateSubjectService;
 import com.example.sbserver.domain.subject.service.DeleteSubjectService;
 import com.example.sbserver.domain.subject.service.QueryMySubjectsService;
@@ -9,7 +9,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -30,7 +29,7 @@ public class SubjectController {
     }
 
     @GetMapping
-    public List<QuerySubjectResponse> querySubjects() {
+    public QuerySubjectListResponse querySubjects() {
         return queryMySubjectsService.execute();
     }
 }

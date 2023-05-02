@@ -2,6 +2,7 @@ package com.example.sbserver.domain.subject.service;
 
 import com.example.sbserver.domain.subject.domain.repository.SubjectRepository;
 import com.example.sbserver.domain.subject.domain.repository.vo.SubjectVo;
+import com.example.sbserver.domain.subject.presentation.dto.response.QuerySubjectListResponse;
 import com.example.sbserver.domain.subject.presentation.dto.response.QuerySubjectResponse;
 import com.example.sbserver.domain.user.domain.User;
 import com.example.sbserver.domain.user.facade.UserFacade;
@@ -20,20 +21,29 @@ public class QueryMySubjectsService {
     private final UserFacade userFacade;
 
     @Transactional(readOnly = true)
-    public List<QuerySubjectResponse> execute() {
+    public QuerySubjectListResponse execute() {
         User user = userFacade.getCurrentUser();
-        List<SubjectVo> subjects = subjectRepository.findAllByUser(user);
+        LocalDateTime now = LocalDateTime.now();
+        List<SubjectVo> subjects = subjectRepository.findAllByUserAndDateTime(user, now);
 
-        return subjects.stream().map(
-                        subject -> QuerySubjectResponse.builder()
-                                .id(subject.getSubjectId())
-                                .title(subject.getTitle())
-                                .emoji(subject.getEmoji())
-                                .userId(subject.getUserId())
-                                .todayRecord(subject.getTodayRecord())
-                                .build()
-                )
-                .collect(Collectors.toList());
+        List<QuerySubjectResponse> subjectResponses = subjects.stream().map(
+                subject -> QuerySubjectResponse.builder()
+                        .id(subject.getSubjectId())
+                        .title(subject.getTitle())
+                        .emoji(subject.getEmoji())
+                        .userId(subject.getUserId())
+                        .todayRecord(subject.getTodayRecord())
+                        .build()
+        ).toList();
+
+        int totalTime = subjectResponses.stream()
+                .mapToInt(QuerySubjectResponse::getTodayRecord)
+                .sum();
+
+        return QuerySubjectListResponse.builder()
+                .subjectList(subjectResponses)
+                .totalTime(totalTime)
+                .build();
     }
 }
 
