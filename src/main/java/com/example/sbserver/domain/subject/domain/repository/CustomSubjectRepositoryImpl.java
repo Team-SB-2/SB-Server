@@ -26,7 +26,7 @@ public class CustomSubjectRepositoryImpl implements CustomSubjectRepository {
                 .leftJoin(record).on(subject.eq(record.subject).and(record.finishedTime.eq(dateTime)))
                 .leftJoin(subject.user, QUser.user)
                 .groupBy(subject)
-                .where(subject.user.eq(user))
+                .where(subject.user.eq(user).and(subject.isViewable.isTrue()))
                 .fetch();
     }
 }
