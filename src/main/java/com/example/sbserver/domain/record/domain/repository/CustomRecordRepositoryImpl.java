@@ -30,8 +30,8 @@ public class CustomRecordRepositoryImpl implements CustomRecordRepository {
 
         return jpaQueryFactory.select(new QRecordVo(record, subject))
                 .from(record)
-                .leftJoin(subject).on(record.subject.eq(subject))
-                .leftJoin(QUser.user).on(record.user.eq(QUser.user))
+                .innerJoin(subject).on(record.subject.eq(subject))
+                .innerJoin(QUser.user).on(record.user.eq(QUser.user))
                 .where(record.finishedTime.between(startDate, endDate.minusNanos(1))
                         .and(record.user.eq(user)))
                 .fetch();
