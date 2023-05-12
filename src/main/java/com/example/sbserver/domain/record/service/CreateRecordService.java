@@ -20,6 +20,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -36,6 +37,21 @@ public class CreateRecordService {
         User user = userFacade.getCurrentUser();
         Subject subject = subjectRepository.findById(id).orElseThrow(() -> SubjectNotFoundException.EXCEPTION);
 
+        if(recordRepository.existsByUser(user)) {
+            LocalDateTime startedTime = recordRepository.findLastRecordByUser(user).getFinishedTime().plusMinutes(1);
+            LocalDateTime finishedTime = request.getStartedTime().minusMinutes(1);
+
+            recordRepository.save(
+                    Record.builder()
+                            .startedTime(startedTime)
+                            .finishedTime(finishedTime)
+                            .total(getDifference(startedTime, finishedTime))
+                            .isRecord(false)
+                            .user(user)
+                            .build()
+            );
+        }
+
         int total = getDifference(request.getStartedTime(), request.getFinishedTime());
 
         if (total > TIME_RANGE) {
@@ -49,6 +65,7 @@ public class CreateRecordService {
                         .subject(subject)
                         .total(total)
                         .memo(request.getMemo())
+                        .isRecord(true)
                         .user(user)
                         .build()
         );

@@ -26,6 +26,8 @@ public class QRecord extends EntityPathBase<Record> {
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
+    public final BooleanPath isRecord = createBoolean("isRecord");
+
     public final StringPath memo = createString("memo");
 
     public final DateTimePath<java.time.LocalDateTime> startedTime = createDateTime("startedTime", java.time.LocalDateTime.class);

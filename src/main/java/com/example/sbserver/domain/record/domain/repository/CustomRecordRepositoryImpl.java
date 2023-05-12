@@ -1,12 +1,12 @@
 package com.example.sbserver.domain.record.domain.repository;
 
+import com.example.sbserver.domain.record.domain.Record;
 import com.example.sbserver.domain.record.domain.repository.vo.FocusVo;
 import com.example.sbserver.domain.record.domain.repository.vo.QRecordVo;
 import com.example.sbserver.domain.record.domain.repository.vo.QFocusVo;
 import com.example.sbserver.domain.record.domain.repository.vo.RecordVo;
 import com.example.sbserver.domain.user.domain.QUser;
 import com.example.sbserver.domain.user.domain.User;
-import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 
@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.YearMonth;
 import java.util.List;
+import java.util.Optional;
 
 import static com.example.sbserver.domain.subject.domain.QSubject.subject;
 import static com.example.sbserver.domain.record.domain.QRecord.record;
@@ -55,5 +56,14 @@ public class CustomRecordRepositoryImpl implements CustomRecordRepository {
                 .where(record.user.eq(user)
                         .and(record.finishedTime.between(localDateTime, localDateTime.minusDays(30))))
                 .fetchOne();
+    }
+
+    @Override
+    public Record findLastRecordByUser(User user) {
+        return Optional.ofNullable(jpaQueryFactory.select(record)
+                .from(record)
+                .where(record.user.eq(user))
+                .orderBy(record.finishedTime.desc())
+                .fetchFirst());
     }
 }
