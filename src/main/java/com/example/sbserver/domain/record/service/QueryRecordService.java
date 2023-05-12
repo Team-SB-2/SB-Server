@@ -34,6 +34,7 @@ public class QueryRecordService {
                                                 .finishedTime(record.getFinishedTime())
                                                 .total(record.getTotal())
                                                 .memo(record.getMemo())
+                                                .isRecord(record.isRecord())
                                                 .subject(QueryRecordListResponse.SubjectElement.builder()
                                                         .title(record.getTitle())
                                                         .emoji(record.getEmoji())

@@ -29,6 +29,9 @@ public class Record {
     @Column(nullable = false)
     private Integer total;
 
+    @Column(nullable = false)
+    private Boolean isRecord;
+
     @Column(length = 20)
     private String memo;
 
@@ -41,11 +44,13 @@ public class Record {
     private User user;
 
     @Builder
-    public Record(LocalDateTime startedTime, LocalDateTime finishedTime, Integer total, String memo, Subject subject, User user) {
+    public Record(LocalDateTime startedTime, LocalDateTime finishedTime, Integer total,
+                  String memo, Subject subject, User user, Boolean isRecord) {
         this.startedTime = startedTime;
         this.finishedTime = finishedTime;
         this.total = total;
         this.memo = memo;
+        this.isRecord = isRecord;
         this.subject = subject;
         this.user = user;
     }

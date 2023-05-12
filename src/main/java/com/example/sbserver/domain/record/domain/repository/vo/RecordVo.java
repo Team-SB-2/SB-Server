@@ -19,6 +19,7 @@ public class RecordVo {
     private final Long subjectId;
     private final String title;
     private final String emoji;
+    private final boolean isRecord;
 
     @QueryProjection
     public RecordVo(Record record, Subject subject) {
@@ -30,5 +31,6 @@ public class RecordVo {
         this.subjectId = subject.getId();
         this.title = subject.getTitle();
         this.emoji = subject.getEmoji();
+        this.isRecord = record.getIsRecord();
     }
 }

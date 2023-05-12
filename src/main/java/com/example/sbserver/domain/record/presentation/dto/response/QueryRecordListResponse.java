@@ -21,8 +21,8 @@ public class QueryRecordListResponse {
         private final LocalDateTime finishedTime;
         private final Integer total;
         private final String memo;
+        private final boolean isRecord;
         private final SubjectElement subject;
-
     }
 
     @Getter

@@ -60,10 +60,10 @@ public class CustomRecordRepositoryImpl implements CustomRecordRepository {
 
     @Override
     public Record findLastRecordByUser(User user) {
-        return Optional.ofNullable(jpaQueryFactory.select(record)
+        return jpaQueryFactory.select(record)
                 .from(record)
                 .where(record.user.eq(user))
                 .orderBy(record.finishedTime.desc())
-                .fetchFirst());
+                .fetchFirst();
     }
 }
