@@ -1,4 +1,4 @@
-package com.example.sbserver.domain.subject.presentation.dto;
+package com.example.sbserver.domain.subject.presentation;
 
 import com.example.sbserver.domain.subject.presentation.dto.request.CreateSubjectRequest;
 import com.example.sbserver.domain.subject.presentation.dto.response.QuerySubjectListResponse;
