@@ -29,7 +29,9 @@ public class SecurityConfig {
 
                 .and()
                 .authorizeRequests()
-                .anyRequest().permitAll()
+                .antMatchers("/users/**").permitAll()
+                .anyRequest()
+                .authenticated()
 
                 .and()
                 .apply(new FilterConfig(jwtParser, objectMapper))
