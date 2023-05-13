@@ -28,8 +28,7 @@ public class QueryRecordListResponse {
 
         private final String memo;
 
-        @JsonProperty("is_record")
-        private final boolean isRecord;
+        private final Boolean isRecord;
 
         private final SubjectElement subject;
     }
