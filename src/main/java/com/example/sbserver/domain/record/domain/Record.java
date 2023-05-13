@@ -35,7 +35,7 @@ public class Record {
     @Column(length = 20)
     private String memo;
 
-    @JoinColumn(name = "subject_id", nullable = false)
+    @JoinColumn(name = "subject_id")
     @ManyToOne(fetch = FetchType.LAZY)
     private Subject subject;
 
