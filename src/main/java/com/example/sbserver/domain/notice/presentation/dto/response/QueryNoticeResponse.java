@@ -10,5 +10,5 @@ import java.time.LocalDateTime;
 public class QueryNoticeResponse {
     private final String title;
     private final String content;
-    private final LocalDateTime dateTime;
+    private final LocalDateTime createdAt;
 }
