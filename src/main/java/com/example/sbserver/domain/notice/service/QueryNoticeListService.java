@@ -22,7 +22,7 @@ public class QueryNoticeListService {
                 notice -> QueryNoticeResponse.builder()
                         .title(notice.getTitle())
                         .content(notice.getContent())
-                        .dateTime(notice.getCreatedAt())
+                        .createdAt(notice.getCreatedAt())
                         .build()
         ).toList();
     }

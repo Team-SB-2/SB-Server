@@ -20,7 +20,6 @@ public class QueryTipsService {
 
         return tips.stream().map(
                 tip -> QueryTipsResponse.builder()
-                        .tipId(tip.getId())
                         .title(tip.getTitle())
                         .content(tip.getContent())
                         .build()

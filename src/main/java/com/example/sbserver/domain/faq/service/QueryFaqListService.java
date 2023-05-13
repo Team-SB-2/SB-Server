@@ -20,7 +20,6 @@ public class QueryFaqListService {
 
         return faqs.stream().map(
                 faq -> QueryFaqResponse.builder()
-                        .tipId(faq.getId())
                         .title(faq.getTitle())
                         .content(faq.getContent())
                         .build()
