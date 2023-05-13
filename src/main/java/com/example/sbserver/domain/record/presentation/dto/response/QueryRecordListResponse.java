@@ -1,5 +1,7 @@
 package com.example.sbserver.domain.record.presentation.dto.response;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -17,11 +19,18 @@ public class QueryRecordListResponse {
     @Builder
     public static class RecordResponse {
         private final Long recordId;
+
         private final LocalDateTime startedTime;
+
         private final LocalDateTime finishedTime;
+
         private final Integer total;
+
         private final String memo;
+
+        @JsonProperty("is_record")
         private final boolean isRecord;
+
         private final SubjectElement subject;
     }
 
