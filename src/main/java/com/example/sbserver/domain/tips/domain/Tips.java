@@ -17,7 +17,7 @@ public class Tips extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = 20, nullable = false)
+    @Column(length = 100, nullable = false)
     private String title;
 
     @Column(length = 1000, nullable = false)
