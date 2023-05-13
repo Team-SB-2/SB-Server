@@ -30,7 +30,7 @@ public class CustomSubjectRepositoryImpl implements CustomSubjectRepository {
                 .leftJoin(record).on(subject.eq(record.subject).and(record.finishedTime.between(startDate, endDate.minusNanos(1))))
                 .leftJoin(subject.user, QUser.user)
                 .groupBy(subject)
-                .where(subject.user.eq(user).and(subject.isViewable.isTrue()))
+                .where(subject.user.eq(user).and(subject.isViewable.isTrue()).and(record.isRecord.isTrue()))
                 .fetch();
     }
 }
