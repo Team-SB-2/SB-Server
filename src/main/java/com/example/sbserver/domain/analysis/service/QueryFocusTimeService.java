@@ -36,7 +36,7 @@ public class QueryFocusTimeService {
     private List<FocusResponse> getListWithEtc(List<FocusResponse> focusResponses) {
         if (focusResponses.size() > 3) {
             int etcSum = 0;
-            for (int i = 3; i <= focusResponses.size(); i++) {
+            for (int i = 3; i < focusResponses.size(); i++) {
                 etcSum += focusResponses.get(i).getSum();
             }
             FocusResponse focusResponse = FocusResponse.builder()
