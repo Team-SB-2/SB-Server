@@ -53,7 +53,7 @@ public class CustomRecordRepositoryImpl implements CustomRecordRepository {
 
     @Override
     public Integer findFocusedTimeByLocalDateAndUser(LocalDateTime localDateTime, User user) {
-        return jpaQueryFactory.select(record.total.sum())
+        return jpaQueryFactory.select(record.total.sum().coalesce(0))
                 .from(record)
                 .where(record.user.eq(user)
                         .and(record.finishedTime.between(localDateTime, localDateTime.minusDays(30))))
