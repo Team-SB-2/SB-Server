@@ -22,7 +22,7 @@ public class CreateSubjectService {
     public void execute(CreateSubjectRequest request) {
         User user = userFacade.getCurrentUser();
 
-        if (subjectRepository.existsByTitle(request.getTitle())) {
+        if (subjectRepository.existsByTitleAndUser(request.getTitle(), user)) {
             Subject subject = subjectRepository.findByTitle(request.getTitle());
             if (subject.getIsViewable()) {
                 throw SubjectExistsException.EXCEPTION;
