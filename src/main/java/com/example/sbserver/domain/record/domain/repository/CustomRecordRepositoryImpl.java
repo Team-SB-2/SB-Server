@@ -42,7 +42,7 @@ public class CustomRecordRepositoryImpl implements CustomRecordRepository {
 
     @Override
     public List<FocusVo> findByYearMonthAndUser(YearMonth yearMonth, User user) {
-        return jpaQueryFactory.select(new QFocusVo(subject.title, subject.emoji, record.total.sum()))
+        return jpaQueryFactory.select(new QFocusVo(subject.title, subject.emoji, record.total.sum().divide(60)))
                 .from(record)
                 .innerJoin(record.subject, subject)
                 .groupBy(subject.id)
