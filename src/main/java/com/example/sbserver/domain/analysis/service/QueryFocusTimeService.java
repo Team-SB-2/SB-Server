@@ -44,8 +44,10 @@ public class QueryFocusTimeService {
                 .sum(etcSum)
                 .build();
 
-        focusResponses.add(3, focusResponse);
-        focusResponses.subList(3, focusResponses.size()).clear();
+        if(focusResponses.size() < 4) {
+            focusResponses.add(3, focusResponse);
+            focusResponses.subList(3, focusResponses.size()).clear();
+        }
         return focusResponses;
     }
 }
