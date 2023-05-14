@@ -7,9 +7,11 @@ import com.example.sbserver.domain.record.domain.repository.vo.QFocusVo;
 import com.example.sbserver.domain.record.domain.repository.vo.RecordVo;
 import com.example.sbserver.domain.user.domain.QUser;
 import com.example.sbserver.domain.user.domain.User;
+import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 
+import javax.management.Query;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -65,5 +67,15 @@ public class CustomRecordRepositoryImpl implements CustomRecordRepository {
                 .where(record.user.eq(user))
                 .orderBy(record.finishedTime.desc())
                 .fetchFirst();
+    }
+
+    @Override
+    public List<Integer> findRecordedDaysByYearMonthAndUser(YearMonth yearMonth, User user) {
+       return jpaQueryFactory.selectDistinct(record.finishedTime.dayOfMonth())
+               .from(record)
+               .where(record.finishedTime.between(yearMonth.atDay(1).atStartOfDay(),
+                       yearMonth.atEndOfMonth().atTime(LocalTime.MAX)).and(record.user.eq(user)))
+               .orderBy(record.id.asc())
+               .fetch();
     }
 }

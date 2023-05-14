@@ -6,6 +6,7 @@ import com.example.sbserver.domain.record.domain.repository.vo.RecordVo;
 import com.example.sbserver.domain.user.domain.User;
 import com.querydsl.jpa.impl.JPAQuery;
 
+import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.YearMonth;
@@ -19,4 +20,6 @@ public interface CustomRecordRepository {
     Integer findFocusedTimeByLocalDateAndUser(LocalDateTime localDateTime, User user);
 
     Record findLastRecordByUser(User user);
+
+    List<Integer> findRecordedDaysByYearMonthAndUser(YearMonth yearMonth, User user);
 }
