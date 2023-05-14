@@ -34,17 +34,17 @@ public class QueryFocusTimeService {
         }
 
     private List<FocusResponse> getListWithEtc(List<FocusResponse> focusResponses) {
-        int etcSum = 0;
-        for (int i = 3; i <= focusResponses.size(); i++) {
-            etcSum += focusResponses.get(i).getSum();
-        }
-        FocusResponse focusResponse = FocusResponse.builder()
-                .title("기타")
-                .emoji("")
-                .sum(etcSum)
-                .build();
+        if (focusResponses.size() > 3) {
+            int etcSum = 0;
+            for (int i = 3; i <= focusResponses.size(); i++) {
+                etcSum += focusResponses.get(i).getSum();
+            }
+            FocusResponse focusResponse = FocusResponse.builder()
+                    .title("기타")
+                    .emoji("")
+                    .sum(etcSum)
+                    .build();
 
-        if(focusResponses.size() < 4) {
             focusResponses.add(3, focusResponse);
             focusResponses.subList(3, focusResponses.size()).clear();
         }
