@@ -75,7 +75,7 @@ public class CustomRecordRepositoryImpl implements CustomRecordRepository {
                .from(record)
                .where(record.finishedTime.between(yearMonth.atDay(1).atStartOfDay(),
                        yearMonth.atEndOfMonth().atTime(LocalTime.MAX)).and(record.user.eq(user)))
-               .orderBy(record.id.asc())
+               .orderBy(record.finishedTime.dayOfMonth().asc())
                .fetch();
     }
 }
