@@ -33,7 +33,7 @@ public class RecordController {
     }
 
     @GetMapping("/calendar")
-    public QueryRecordedDaysResponse queryRecordedDays(@RequestParam @JsonFormat(pattern = "yyyy-MM")YearMonth yearMonth) {
-        return queryRecordedDaysService.execute(yearMonth);
+    public QueryRecordedDaysResponse queryRecordedDays(@RequestParam("yearMonth") String yearMonthStr) {
+        return queryRecordedDaysService.execute(yearMonthStr);
     }
 }
