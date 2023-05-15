@@ -16,11 +16,11 @@ public class QueryRecordedDaysService {
     private final RecordRepository recordRepository;
     private final UserFacade userFacade;
 
-    public QueryRecordedDaysResponse execute(String yearMonth) {
+    public QueryRecordedDaysResponse execute(String yearMonthStr) {
         User user = userFacade.getCurrentUser();
+        YearMonth yearMonth = YearMonth.parse(yearMonthStr);
+        List<Integer> recordedDays = recordRepository.findRecordedDaysByYearMonthAndUser(yearMonth, user);
 
-        List<Integer> recordedDays = recordRepository.findRecordedDaysByYearMonthAndUser(YearMonth.parse(yearMonth), user);
-
-        return new QueryRecordedDaysResponse(recordedDays);
+        return new QueryRecordedDaysResponse(yearMonth, recordedDays);
     }
 }
