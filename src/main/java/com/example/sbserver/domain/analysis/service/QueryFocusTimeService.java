@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.YearMonth;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,37 +23,48 @@ public class QueryFocusTimeService {
     public QueryFocusTimeListResponse execute(YearMonth yearMonth) {
         User user = userFacade.getCurrentUser();
         List<FocusVo> focusVoList = recordRepository.findByYearMonthAndUser(yearMonth, user);
-        List<FocusResponse> focusResponses = focusVoList
-                .stream()
+        int totalTime = getTotalTime(focusVoList);
+
+        List<FocusResponse> focusResponses = focusVoList.stream()
                 .map(FocusResponse::of)
+                .sorted(Comparator.comparingInt(FocusResponse::getSum).reversed())
                 .collect(Collectors.toList());
 
         return QueryFocusTimeListResponse.builder()
                 .yearMonth(yearMonth)
-                .totalTime(getTotalTime(focusVoList))
-                .focusResponses(getListWithEtc(focusResponses))
+                .totalTime(totalTime)
+                .focusResponses(getListWithEtc(focusResponses).stream()
+                        .map(it -> it.updateFocusRatio(getTimeRatio(it.getSum(), totalTime)))
+                        .collect(Collectors.toList()))
                 .build();
-        }
+    }
 
     private List<FocusResponse> getListWithEtc(List<FocusResponse> focusResponses) {
         if (focusResponses.size() > 3) {
-            int etcSum = 0;
-            for (int i = 3; i < focusResponses.size(); i++) {
-                etcSum += focusResponses.get(i).getSum();
-            }
+            int etcSum = focusResponses.stream()
+                    .skip(3)
+                    .mapToInt(FocusResponse::getSum)
+                    .sum();
+
             FocusResponse focusResponse = FocusResponse.builder()
                     .title("기타")
                     .emoji("")
                     .sum(etcSum)
                     .build();
 
-            focusResponses.add(3, focusResponse);
-            focusResponses.subList(3, focusResponses.size()).clear();
+            focusResponses = focusResponses.stream()
+                    .limit(3)
+                    .collect(Collectors.toList());
+            focusResponses.add(2, focusResponse);
         }
         return focusResponses;
     }
 
     private int getTotalTime(List<FocusVo> focusVoList) {
         return focusVoList.stream().mapToInt(FocusVo::getSum).sum();
+    }
+
+    private Integer getTimeRatio(int sum, int total) {
+        return sum > 0 ? (int) ((float) sum / (float) total * 100) : 0;
     }
 }
