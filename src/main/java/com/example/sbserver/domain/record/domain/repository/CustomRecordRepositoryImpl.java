@@ -1,23 +1,17 @@
 package com.example.sbserver.domain.record.domain.repository;
 
 import com.example.sbserver.domain.record.domain.Record;
-import com.example.sbserver.domain.record.domain.repository.vo.FocusVo;
-import com.example.sbserver.domain.record.domain.repository.vo.QRecordVo;
-import com.example.sbserver.domain.record.domain.repository.vo.QFocusVo;
-import com.example.sbserver.domain.record.domain.repository.vo.RecordVo;
+import com.example.sbserver.domain.record.domain.repository.vo.*;
 import com.example.sbserver.domain.user.domain.QUser;
 import com.example.sbserver.domain.user.domain.User;
-import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 
-import javax.management.Query;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.YearMonth;
 import java.util.List;
-import java.util.Optional;
 
 import static com.example.sbserver.domain.subject.domain.QSubject.subject;
 import static com.example.sbserver.domain.record.domain.QRecord.record;
@@ -71,11 +65,25 @@ public class CustomRecordRepositoryImpl implements CustomRecordRepository {
 
     @Override
     public List<Integer> findRecordedDaysByYearMonthAndUser(YearMonth yearMonth, User user) {
-       return jpaQueryFactory.selectDistinct(record.finishedTime.dayOfMonth())
-               .from(record)
-               .where(record.finishedTime.between(yearMonth.atDay(1).atStartOfDay(),
-                       yearMonth.atEndOfMonth().atTime(LocalTime.MAX)).and(record.user.eq(user)))
-               .orderBy(record.finishedTime.dayOfMonth().asc())
-               .fetch();
+        return jpaQueryFactory.selectDistinct(record.finishedTime.dayOfMonth())
+                .from(record)
+                .where(record.finishedTime.between(yearMonth.atDay(1).atStartOfDay(),
+                        yearMonth.atEndOfMonth().atTime(LocalTime.MAX)).and(record.user.eq(user)))
+                .orderBy(record.finishedTime.dayOfMonth().asc())
+                .fetch();
+    }
+
+    @Override
+    public CalendarTimeVo findCalendarFocusedTimeByLocalDateAndUser(LocalDate date, User user) {
+        LocalDateTime startDate = date.atTime(5, 0, 0);
+        LocalDateTime endDate = date.plusDays(1).atTime(4, 59, 59);
+
+        return jpaQueryFactory.select(new QCalendarTimeVo(record.total.sum().coalesce(0),
+                        record.total.max().coalesce(0)))
+                .from(record)
+                .groupBy(record.finishedTime.between(startDate, endDate))
+                .where(record.finishedTime.between(startDate, endDate)
+                        .and(record.user.eq(user)))
+                .fetchOne();
     }
 }
