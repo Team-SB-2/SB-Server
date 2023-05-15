@@ -29,6 +29,7 @@ public class QueryFocusTimeService {
 
         return QueryFocusTimeListResponse.builder()
                 .yearMonth(yearMonth)
+                .totalTime(getTotalTime(focusVoList))
                 .focusResponses(getListWithEtc(focusResponses))
                 .build();
         }
@@ -49,5 +50,9 @@ public class QueryFocusTimeService {
             focusResponses.subList(3, focusResponses.size()).clear();
         }
         return focusResponses;
+    }
+
+    private int getTotalTime(List<FocusVo> focusVoList) {
+        return focusVoList.stream().mapToInt(FocusVo::getSum).sum();
     }
 }

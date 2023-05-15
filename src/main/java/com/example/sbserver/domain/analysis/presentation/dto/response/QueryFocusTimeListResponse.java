@@ -10,5 +10,6 @@ import java.util.List;
 @Builder
 public class QueryFocusTimeListResponse {
     private final YearMonth yearMonth;
+    private final Integer totalTime;
     private final List<FocusResponse> focusResponses;
 }
