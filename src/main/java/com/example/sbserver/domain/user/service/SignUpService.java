@@ -32,6 +32,7 @@ public class SignUpService {
                         .name(request.getName())
                         .age(request.getAge())
                         .sex(request.getSex())
+                        .isMarketingAgreed(request.getIsMarketingAgreed())
                         .build()
         );
         return jwtTokenProvider.getToken(request.getEmail(), Role.USER.toString());

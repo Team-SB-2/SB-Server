@@ -26,4 +26,6 @@ public class SignUpRequest {
     private Integer age;
 
     private Sex sex;
+
+    private Boolean isMarketingAgreed;
 }

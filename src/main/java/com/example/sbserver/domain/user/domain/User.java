@@ -38,6 +38,8 @@ public class User extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    private Boolean isMarketingAgreed;
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Subject> subjectList;
 
@@ -45,13 +47,14 @@ public class User extends BaseTimeEntity {
     private List<Record> recordList;
 
     @Builder
-    public User(String email, String name, String password, Integer age, Sex sex) {
+    public User(String email, String name, String password, Integer age, Sex sex, Boolean isMarketingAgreed) {
         this.email = email;
         this.name = name;
         this.password = password;
         this.age = age;
         this.sex = sex;
         this.role = Role.USER;
+        this.isMarketingAgreed = isMarketingAgreed;
     }
 
     public void update(String name, Integer age, Sex sex) {
