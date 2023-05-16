@@ -81,7 +81,6 @@ public class CustomRecordRepositoryImpl implements CustomRecordRepository {
         return jpaQueryFactory.select(new QCalendarTimeVo(record.total.sum().coalesce(0),
                         record.total.max().coalesce(0)))
                 .from(record)
-                .groupBy(record.finishedTime.between(startDate, endDate))
                 .where(record.finishedTime.between(startDate, endDate)
                         .and(record.user.eq(user)))
                 .fetchOne();
