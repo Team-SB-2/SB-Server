@@ -37,8 +37,13 @@ public class CreateRecordService {
         User user = userFacade.getCurrentUser();
         Subject subject = subjectRepository.findById(id).orElseThrow(() -> SubjectNotFoundException.EXCEPTION);
 
+        LocalDateTime lastStartedTime = recordRepository.findLastRecordByUser(user).getFinishedTime().plusMinutes(1);
+        LocalDateTime defaultStartedTime = request.getStartedTime().withHour(5).withMinute(0).withSecond(0);
+
         if(recordRepository.existsByUser(user)) {
-            LocalDateTime startedTime = recordRepository.findLastRecordByUser(user).getFinishedTime().plusMinutes(1);
+            LocalDateTime startedTime =
+                    lastStartedTime.isBefore(request.getStartedTime().withHour(5).withMinute(0).withSecond(0))
+                    ? lastStartedTime : defaultStartedTime;
             LocalDateTime finishedTime = request.getStartedTime().minusMinutes(1);
 
             recordRepository.save(
