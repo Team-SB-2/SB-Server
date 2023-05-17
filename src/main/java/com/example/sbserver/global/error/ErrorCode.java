@@ -37,6 +37,7 @@ public enum ErrorCode {
 
     SUBJECT_EXISTS(409, "Subject Exists"),
 
+    SUBJECT_LIMIT_EXCEEDED(409, "Subject Limit Exceeded"),
 
     INTERNAL_SERVER_ERROR(500, "Internal Server Error");
 

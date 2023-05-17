@@ -4,9 +4,13 @@ import com.example.sbserver.domain.subject.domain.Subject;
 import com.example.sbserver.domain.user.domain.User;
 import org.springframework.data.repository.CrudRepository;
 
+import java.util.List;
+
 public interface SubjectRepository extends CrudRepository<Subject, Long>, CustomSubjectRepository {
 
     boolean existsByTitleAndUser(String title, User user);
 
     Subject findByTitle(String title);
+
+    Integer countByUser(User user);
 }
