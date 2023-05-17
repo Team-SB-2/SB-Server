@@ -12,5 +12,5 @@ public interface SubjectRepository extends CrudRepository<Subject, Long>, Custom
 
     Subject findByTitle(String title);
 
-    Integer countByUser(User user);
+    Integer countByUserAndIsViewableTrue(User user);
 }
