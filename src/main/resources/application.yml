@@ -1,5 +1,5 @@
 server:
-  port: 8888
+  port: 8898
 spring:
   server:
     shutdown: graceful
@@ -19,6 +19,7 @@ spring:
 
   jackson:
     property-naming-strategy: SNAKE_CASE
+    time-zone: Asia/Seoul
 
   jwt:
     secret-key: ${JWT_SECRET}
