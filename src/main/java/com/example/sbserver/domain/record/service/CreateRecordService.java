@@ -7,6 +7,7 @@ import com.example.sbserver.domain.record.exception.RecordOutOfRangeException;
 import com.example.sbserver.domain.record.presentation.dto.request.CreateRecordRequest;
 import com.example.sbserver.domain.subject.domain.Subject;
 import com.example.sbserver.domain.subject.domain.repository.SubjectRepository;
+import com.example.sbserver.domain.subject.exception.NoPermissionException;
 import com.example.sbserver.domain.subject.exception.SubjectNotFoundException;
 import com.example.sbserver.domain.user.domain.User;
 import com.example.sbserver.domain.user.facade.UserFacade;
@@ -36,6 +37,10 @@ public class CreateRecordService {
 
         User user = userFacade.getCurrentUser();
         Subject subject = subjectRepository.findById(id).orElseThrow(() -> SubjectNotFoundException.EXCEPTION);
+
+        if (!subject.getUser().equals(user)) {
+            throw NoPermissionException.EXCEPTION;
+        }
 
         LocalDateTime lastStartedTime = recordRepository.findLastRecordByUser(user).getFinishedTime().plusMinutes(1);
         LocalDateTime defaultStartedTime = request.getStartedTime().toLocalDate().atTime(5, 0, 0);
