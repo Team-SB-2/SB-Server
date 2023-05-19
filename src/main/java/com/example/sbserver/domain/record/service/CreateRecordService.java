@@ -42,26 +42,27 @@ public class CreateRecordService {
             throw NoPermissionException.EXCEPTION;
         }
 
+        LocalDateTime startedTime = request.getStartedTime().toLocalDate().atTime(5, 0, 0);
+
         if(recordRepository.existsByUser(user)) {
             LocalDateTime lastStartedTime = recordRepository.findLastRecordByUser(user).getFinishedTime().plusMinutes(1);
-            LocalDateTime defaultStartedTime = request.getStartedTime().toLocalDate().atTime(5, 0, 0);
 
-            LocalDateTime startedTime =
-                    lastStartedTime.isBefore(defaultStartedTime)
-                    ? defaultStartedTime : lastStartedTime;
-            LocalDateTime finishedTime = request.getStartedTime().minusMinutes(1);
-
-            recordRepository.save(
-                    Record.builder()
-                            .startedTime(startedTime)
-                            .finishedTime(finishedTime)
-                            .total(getDifference(startedTime, finishedTime))
-                            .isRecord(false)
-                            .user(user)
-                            .subject(subject)
-                            .build()
-            );
+            if(lastStartedTime.isBefore(startedTime))
+                startedTime = lastStartedTime;
         }
+
+        LocalDateTime finishedTime = request.getStartedTime().minusMinutes(1);
+
+        recordRepository.save(
+                Record.builder()
+                        .startedTime(startedTime)
+                        .finishedTime(finishedTime)
+                        .total(getDifference(startedTime, finishedTime))
+                        .isRecord(false)
+                        .user(user)
+                        .subject(subject)
+                        .build()
+        );
 
         int total = getDifference(request.getStartedTime(), request.getFinishedTime());
 
