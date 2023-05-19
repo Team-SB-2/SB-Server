@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.time.LocalDate;
 import java.time.YearMonth;
 
@@ -26,7 +27,7 @@ public class RecordController {
     private final QueryCalendarTimeService queryCalendarTimeService;
 
     @PostMapping("/{subject-id}")
-    public void createRecord(@PathVariable("subject-id") Long id, @RequestBody CreateRecordRequest request) {
+    public void createRecord(@PathVariable("subject-id") Long id, @Valid @RequestBody CreateRecordRequest request) {
         createRecordService.execute(id, request);
     }
 
