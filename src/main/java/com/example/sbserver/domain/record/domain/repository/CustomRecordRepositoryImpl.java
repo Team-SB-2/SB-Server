@@ -72,7 +72,7 @@ public class CustomRecordRepositoryImpl implements CustomRecordRepository {
                 .where(record.finishedTime.between(yearMonth.atDay(1).atStartOfDay(),
                         yearMonth.atEndOfMonth().atTime(LocalTime.MAX))
                         .and(record.user.eq(user)
-                        .and(record.isRecord).isTrue()))
+                        .and(record.isRecord.isTrue())))
                 .orderBy(record.finishedTime.dayOfMonth().asc())
                 .fetch();
     }
@@ -86,7 +86,7 @@ public class CustomRecordRepositoryImpl implements CustomRecordRepository {
                         record.total.max().coalesce(0)))
                 .from(record)
                 .where(record.finishedTime.between(startDate, endDate)
-                        .and(record.user.eq(user)).and(record.isRecord).isTrue())
+                        .and(record.user.eq(user)).and(record.isRecord.isTrue()))
                 .fetchFirst();
     }
 }
