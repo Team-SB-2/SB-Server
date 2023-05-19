@@ -47,7 +47,7 @@ public class CreateRecordService {
         if(recordRepository.existsByUser(user)) {
             LocalDateTime lastStartedTime = recordRepository.findLastRecordByUser(user).getFinishedTime().plusMinutes(1);
 
-            if(lastStartedTime.isBefore(startedTime))
+            if(lastStartedTime.isAfter(startedTime))
                 startedTime = lastStartedTime;
         }
 
@@ -60,7 +60,6 @@ public class CreateRecordService {
                         .total(getDifference(startedTime, finishedTime))
                         .isRecord(false)
                         .user(user)
-                        .subject(subject)
                         .build()
         );
 
