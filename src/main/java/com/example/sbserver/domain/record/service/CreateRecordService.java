@@ -59,6 +59,7 @@ public class CreateRecordService {
                         .finishedTime(finishedTime)
                         .total(getDifference(startedTime, finishedTime))
                         .isRecord(false)
+                        .subject(subject)
                         .user(user)
                         .build()
         );
