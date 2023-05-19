@@ -77,12 +77,18 @@ public class CustomRecordRepositoryImpl implements CustomRecordRepository {
     public CalendarTimeVo findCalendarFocusedTimeByLocalDateAndUser(LocalDate date, User user) {
         LocalDateTime startDate = date.atTime(5, 0, 0);
         LocalDateTime endDate = date.plusDays(1).atTime(4, 59, 59);
-
-        return jpaQueryFactory.select(new QCalendarTimeVo(record.total.sum().coalesce(0),
-                        record.total.max().coalesce(0)))
+        Integer totalFocusedTime = jpaQueryFactory.select(record.total.sum().coalesce(0))
                 .from(record)
                 .where(record.finishedTime.between(startDate, endDate)
                         .and(record.user.eq(user)))
                 .fetchOne();
+
+        Integer maxFocusedTime = jpaQueryFactory.select(record.total.max())
+                .from(record)
+                .where(record.finishedTime.between(startDate, endDate)
+                        .and(record.user.eq(user)))
+                .fetchOne();
+
+        return new CalendarTimeVo(totalFocusedTime, maxFocusedTime);
     }
 }
