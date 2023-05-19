@@ -42,10 +42,10 @@ public class CreateRecordService {
             throw NoPermissionException.EXCEPTION;
         }
 
-        LocalDateTime lastStartedTime = recordRepository.findLastRecordByUser(user).getFinishedTime().plusMinutes(1);
-        LocalDateTime defaultStartedTime = request.getStartedTime().toLocalDate().atTime(5, 0, 0);
-
         if(recordRepository.existsByUser(user)) {
+            LocalDateTime lastStartedTime = recordRepository.findLastRecordByUser(user).getFinishedTime().plusMinutes(1);
+            LocalDateTime defaultStartedTime = request.getStartedTime().toLocalDate().atTime(5, 0, 0);
+
             LocalDateTime startedTime =
                     lastStartedTime.isBefore(defaultStartedTime)
                     ? defaultStartedTime : lastStartedTime;
