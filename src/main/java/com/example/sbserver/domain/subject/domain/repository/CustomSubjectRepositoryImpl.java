@@ -7,7 +7,9 @@ import com.example.sbserver.domain.user.domain.User;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 import static com.example.sbserver.domain.subject.domain.QSubject.subject;
@@ -19,9 +21,9 @@ public class CustomSubjectRepositoryImpl implements CustomSubjectRepository {
     private final JPAQueryFactory jpaQueryFactory;
 
     @Override
-    public List<SubjectVo> findAllByUserAndDateTime(User user, LocalDateTime dateTime) {
+    public List<SubjectVo> findAllByUserAndDate(User user, LocalDate localDate) {
 
-        LocalDateTime startDate = LocalDateTime.now().with(LocalDateTime.MIN);
+        LocalDateTime startDate = localDate.atTime(LocalTime.MIN);
         LocalDateTime endDate = startDate.plusDays(1);
         return jpaQueryFactory
                 .select(new QSubjectVo(subject.id, subject.title, subject.emoji, subject.user.id, record.total.sum()))

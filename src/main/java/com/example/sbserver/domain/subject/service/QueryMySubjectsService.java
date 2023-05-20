@@ -10,9 +10,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -23,8 +22,8 @@ public class QueryMySubjectsService {
     @Transactional(readOnly = true)
     public QuerySubjectListResponse execute() {
         User user = userFacade.getCurrentUser();
-        LocalDateTime now = LocalDateTime.now();
-        List<SubjectVo> subjects = subjectRepository.findAllByUserAndDateTime(user, now);
+        LocalDate now = LocalDate.now();
+        List<SubjectVo> subjects = subjectRepository.findAllByUserAndDate(user, now);
 
         List<QuerySubjectResponse> subjectResponses = subjects.stream().map(
                 subject -> QuerySubjectResponse.builder()
