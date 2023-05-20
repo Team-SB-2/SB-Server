@@ -42,7 +42,7 @@ public class CreateRecordService {
             throw NoPermissionException.EXCEPTION;
         }
 
-        LocalDateTime startedTime = request.getStartedTime().toLocalDate().atTime(5, 0, 0);
+        LocalDateTime startedTime = request.getStartedTime().with(LocalDateTime.MIN);
 
         if(recordRepository.existsByUser(user)) {
             LocalDateTime lastStartedTime = recordRepository.findLastRecordByUser(user).getFinishedTime().plusMinutes(1);
@@ -89,7 +89,7 @@ public class CreateRecordService {
     }
 
     private void checkIsRecordWithinTimeRange(LocalDateTime startedTime, LocalDateTime finishedTime) {
-        LocalDateTime standardTime = LocalDateTime.of(finishedTime.toLocalDate(), LocalTime.of(5, 0, 0));
+        LocalDateTime standardTime = finishedTime.with(LocalDateTime.MIN);
 
         if (startedTime.isBefore(standardTime) && finishedTime.isAfter(standardTime)) {
             throw RecordDeadLineExceedException.EXCEPTION;

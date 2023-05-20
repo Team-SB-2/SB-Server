@@ -22,7 +22,7 @@ public class CustomRecordRepositoryImpl implements CustomRecordRepository {
 
     @Override
     public List<RecordVo> findByFinishedDateAndUser(LocalDate date, User user) {
-        LocalDateTime startDate = date.atTime(5, 0, 0);
+        LocalDateTime startDate = date.atTime(0, 0, 0);
         LocalDateTime endDate = startDate.plusDays(1);
 
         return jpaQueryFactory.select(new QRecordVo(record, subject))
@@ -79,8 +79,8 @@ public class CustomRecordRepositoryImpl implements CustomRecordRepository {
 
     @Override
     public CalendarTimeVo findCalendarFocusedTimeByLocalDateAndUser(LocalDate date, User user) {
-        LocalDateTime startDate = date.atTime(5, 0, 0);
-        LocalDateTime endDate = date.plusDays(1).atTime(4, 59, 59);
+        LocalDateTime startDate = date.atTime(0, 0, 0);
+        LocalDateTime endDate = date.atTime(23, 59, 59);
 
         return jpaQueryFactory.select(new QCalendarTimeVo(record.total.sum().coalesce(0),
                         record.total.max().coalesce(0)))
