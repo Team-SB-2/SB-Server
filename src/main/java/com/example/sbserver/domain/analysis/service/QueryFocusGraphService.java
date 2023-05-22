@@ -26,11 +26,11 @@ public class QueryFocusGraphService {
 
         boolean isThisFocusedTimeBig = thisFocusedTime > lastFocusedTime;
 
-        Integer growthPercent =  isThisFocusedTimeBig?
-                (int) ((float)thisFocusedTime / (float)lastFocusedTime * 100) : 0;
+        Integer growthPercent = isThisFocusedTimeBig ?
+                (int) ((float) thisFocusedTime / (float) lastFocusedTime * 100) : 0;
 
-        Integer increasedTime = isThisFocusedTimeBig?
-                (thisFocusedTime - lastFocusedTime) / 1000  : 0;
+        Integer increasedTime = isThisFocusedTimeBig ?
+                thisFocusedTime - lastFocusedTime / 60 : 0;
 
         return QueryFocusGraphResponse.builder()
                 .thisMonth(today.getMonth())
