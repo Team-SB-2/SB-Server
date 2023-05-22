@@ -45,13 +45,13 @@ public class CreateRecordService {
         LocalDateTime startedTime = request.getStartedTime().with(LocalTime.MIN);
 
         if(recordRepository.existsByUser(user)) {
-            LocalDateTime lastStartedTime = recordRepository.findLastRecordByUser(user).getFinishedTime().plusMinutes(1);
+            LocalDateTime lastStartedTime = recordRepository.findLastRecordByUser(user).getFinishedTime();
 
             if(lastStartedTime.isAfter(startedTime))
                 startedTime = lastStartedTime;
         }
 
-        LocalDateTime finishedTime = request.getStartedTime().minusMinutes(1);
+        LocalDateTime finishedTime = request.getStartedTime();
 
         recordRepository.save(
                 Record.builder()
