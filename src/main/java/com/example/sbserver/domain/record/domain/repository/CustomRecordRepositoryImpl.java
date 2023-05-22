@@ -41,7 +41,7 @@ public class CustomRecordRepositoryImpl implements CustomRecordRepository {
                 .innerJoin(record.subject, subject)
                 .groupBy(subject.id)
                 .where(record.user.eq(user), record.finishedTime.between(yearMonth.atDay(1).atStartOfDay(),
-                        yearMonth.atEndOfMonth().atTime(LocalTime.MAX))
+                                yearMonth.atEndOfMonth().atTime(LocalTime.MAX))
                         .and(record.isRecord.isTrue()))
                 .fetch();
     }
@@ -51,7 +51,7 @@ public class CustomRecordRepositoryImpl implements CustomRecordRepository {
         return jpaQueryFactory.select(record.total.sum().coalesce(0))
                 .from(record)
                 .where(record.user.eq(user)
-                        .and(record.finishedTime.between(localDateTime, localDateTime.minusDays(30))
+                        .and(record.finishedTime.between(localDateTime.minusDays(1), localDateTime)
                                 .and(record.isRecord.isTrue())))
                 .fetchOne();
     }
@@ -70,9 +70,9 @@ public class CustomRecordRepositoryImpl implements CustomRecordRepository {
         return jpaQueryFactory.selectDistinct(record.finishedTime.dayOfMonth())
                 .from(record)
                 .where(record.finishedTime.between(yearMonth.atDay(1).atStartOfDay(),
-                        yearMonth.atEndOfMonth().atTime(LocalTime.MAX))
+                                yearMonth.atEndOfMonth().atTime(LocalTime.MAX))
                         .and(record.user.eq(user)
-                        .and(record.isRecord.isTrue())))
+                                .and(record.isRecord.isTrue())))
                 .orderBy(record.finishedTime.dayOfMonth().asc())
                 .fetch();
     }
