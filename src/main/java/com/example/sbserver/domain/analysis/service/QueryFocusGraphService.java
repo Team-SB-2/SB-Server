@@ -35,7 +35,7 @@ public class QueryFocusGraphService {
         return QueryFocusGraphResponse.builder()
                 .thisMonth(today.getMonth())
                 .lastMonth(today.minusMonths(1).getMonth())
-                .growthPercent(growthPercent)
+                .growthPercent(growthPercent > 100 ? 100 : growthPercent) //100%가 한도임
                 .increasedTime(increasedTime)
                 .build();
     }
