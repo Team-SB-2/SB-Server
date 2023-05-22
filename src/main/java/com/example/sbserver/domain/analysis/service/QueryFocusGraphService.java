@@ -23,10 +23,11 @@ public class QueryFocusGraphService {
 
         Integer thisFocusedTime = recordRepository.findFocusedTimeByLocalDateAndUser(today, user);
         Integer lastFocusedTime = recordRepository.findFocusedTimeByLocalDateAndUser(today.minusDays(30), user);
+        lastFocusedTime = lastFocusedTime < 0 ? 1 : lastFocusedTime;
 
         boolean isThisFocusedTimeBig = thisFocusedTime > lastFocusedTime;
 
-        Integer growthPercent = isThisFocusedTimeBig ?
+        int growthPercent = isThisFocusedTimeBig ?
                 (int) ((float) thisFocusedTime / (float) lastFocusedTime * 100) : 0;
 
         Integer increasedTime = isThisFocusedTimeBig ?
@@ -35,7 +36,7 @@ public class QueryFocusGraphService {
         return QueryFocusGraphResponse.builder()
                 .thisMonth(today.getMonth())
                 .lastMonth(today.minusMonths(1).getMonth())
-                .growthPercent(growthPercent > 100 ? 100 : growthPercent) //100%가 한도임
+                .growthPercent(growthPercent > 100 ? ) //100%가 한도임
                 .increasedTime(increasedTime)
                 .build();
     }

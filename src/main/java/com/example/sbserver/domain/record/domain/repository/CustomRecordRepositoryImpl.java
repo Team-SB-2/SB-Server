@@ -51,7 +51,7 @@ public class CustomRecordRepositoryImpl implements CustomRecordRepository {
         return jpaQueryFactory.select(record.total.sum().coalesce(0))
                 .from(record)
                 .where(record.user.eq(user)
-                        .and(record.finishedTime.between(localDateTime.minusDays(1), localDateTime)
+                        .and(record.finishedTime.between(localDateTime.minusDays(30), localDateTime)
                                 .and(record.isRecord.isTrue())))
                 .fetchOne();
     }
