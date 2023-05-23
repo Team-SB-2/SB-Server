@@ -24,7 +24,7 @@ public class QueryFocusGraphService {
         Integer thisFocusedTime = recordRepository.findFocusedTimeByLocalDateAndUser(today, user);
         Integer lastFocusedTime = recordRepository.findFocusedTimeByLocalDateAndUser(today.minusDays(30), user);
 
-        lastFocusedTime = lastFocusedTime < 0 ? 1 : lastFocusedTime;
+        lastFocusedTime = lastFocusedTime == 0 ? 1 : lastFocusedTime;
 
         boolean isThisFocusedTimeBig = thisFocusedTime > lastFocusedTime;
 
