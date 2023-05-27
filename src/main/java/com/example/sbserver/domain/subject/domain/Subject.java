@@ -43,4 +43,10 @@ public class Subject {
     public void updateIsViewable(Boolean isViewable) {
         this.isViewable = isViewable;
     }
+
+    public void updateEmoji(String emoji) {
+        if (emoji != null) {
+            this.emoji = emoji;
+        }
+    }
 }
