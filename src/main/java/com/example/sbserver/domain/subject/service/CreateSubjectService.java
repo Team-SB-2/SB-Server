@@ -34,6 +34,7 @@ public class CreateSubjectService {
                 throw SubjectExistsException.EXCEPTION;
             }
             subject.updateIsViewable(true);
+            subject.updateEmoji(request.getEmoji());
         } else {
             subjectRepository.save(
                     Subject.builder()
