@@ -17,6 +17,7 @@ import javax.validation.Valid;
 public class UserController {
     private final SignUpService signUpService;
     private final LoginService loginService;
+    private final AnonymousSignupService anonymousSignupService;
     private final TokenRefreshService tokenRefreshService;
     private final QueryMyInfoService queryMyInfoService;
     private final UpdateUserInfoService updateUserInfoService;
@@ -26,6 +27,11 @@ public class UserController {
     @PostMapping
     public TokenResponse signUp(@RequestBody @Valid SignUpRequest request) {
         return signUpService.execute(request);
+    }
+
+    @PostMapping("/anonymous")
+    public TokenResponse anonymousSignUp() {
+        return anonymousSignupService.execute();
     }
 
     @PostMapping("/token")

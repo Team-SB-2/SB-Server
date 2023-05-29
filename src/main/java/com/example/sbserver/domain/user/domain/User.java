@@ -25,13 +25,13 @@ public class User extends BaseTimeEntity {
     @Column(length = 60)
     private String password;
 
-    @Column(length = 10, nullable = false)
+    @Column(length = 10)
     private String name;
 
-    @Column(length = 3, nullable = false)
+    @Column(length = 3)
     private Integer age;
 
-    @Column(length = 6, nullable = false)
+    @Column(length = 6)
     private Sex sex;
 
     @Column(length = 24, nullable = false)

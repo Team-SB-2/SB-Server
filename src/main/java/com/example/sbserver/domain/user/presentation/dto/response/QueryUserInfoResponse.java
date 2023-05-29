@@ -16,10 +16,7 @@ public class QueryUserInfoResponse {
 
     public static QueryUserInfoResponse of(User user) {
         return QueryUserInfoResponse.builder()
-                .email(user.getEmail())
-                .name(user.getName())
-                .age(user.getAge())
-                .sex(user.getSex())
+                .name(user.getEmail())
                 .build();
     }
 }
