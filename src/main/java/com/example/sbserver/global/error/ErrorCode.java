@@ -35,9 +35,11 @@ public enum ErrorCode {
 
     EMAIL_EXIST(409, "Email Exist"),
 
+    RECORD_EXISTS(409, "Record Exists"),
+
     SUBJECT_EXISTS(409, "Subject Exists"),
 
-    SUBJECT_LIMIT_EXCEEDED(409, "Subject Limit Exceeded"),
+    SUBJECT_LIMIT_EXCEEDED(401, "Subject Limit Exceeded"),
 
     INTERNAL_SERVER_ERROR(500, "Internal Server Error");
 
