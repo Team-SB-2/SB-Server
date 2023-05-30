@@ -1,5 +1,5 @@
 package com.example.sbserver.domain.user.domain;
 
 public enum Role {
-	ADMIN, USER
+	ADMIN, USER, MEMBER
 }
