@@ -16,7 +16,7 @@ public class QueryUserInfoResponse {
 
     public static QueryUserInfoResponse of(User user) {
         return QueryUserInfoResponse.builder()
-                .name(user.getEmail())
+                .name(user.getName())
                 .build();
     }
 }

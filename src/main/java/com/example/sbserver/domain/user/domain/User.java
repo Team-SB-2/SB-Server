@@ -22,10 +22,10 @@ public class User extends BaseTimeEntity {
     @Column(length = 40, nullable = false)
     private String email;
 
-    @Column(length = 60)
+    @Column(length = 60, nullable = false)
     private String password;
 
-    @Column(length = 10)
+    @Column(length = 10, nullable = false)
     private String name;
 
     @Column(length = 3)
@@ -47,14 +47,21 @@ public class User extends BaseTimeEntity {
     private List<Record> recordList;
 
     @Builder
-    public User(String email, String name, String password, Integer age, Sex sex, Boolean isMarketingAgreed) {
+    public User(String email, String password, String name) {
         this.email = email;
-        this.name = name;
         this.password = password;
+        this.name = name;
+        this.role = Role.USER;
+    }
+
+    public void registerAsMember(String email, String password, String name, Integer age, Sex sex, Boolean isMarketingAgreed) {
+        this.email = email;
+        this.password = password;
+        this.name = name;
         this.age = age;
         this.sex = sex;
-        this.role = Role.USER;
         this.isMarketingAgreed = isMarketingAgreed;
+        this.role = Role.MEMBER;
     }
 
     public void update(String name, Integer age, Sex sex) {

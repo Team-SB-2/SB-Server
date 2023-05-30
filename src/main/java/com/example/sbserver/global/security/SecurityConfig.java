@@ -1,11 +1,13 @@
 package com.example.sbserver.global.security;
 
+import com.example.sbserver.domain.user.domain.Role;
 import com.example.sbserver.global.config.FilterConfig;
 import com.example.sbserver.global.security.jwt.JwtParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -29,7 +31,9 @@ public class SecurityConfig {
 
                 .and()
                 .authorizeRequests()
-                .antMatchers("/users/**").permitAll()
+                .antMatchers("/users/anonymous").permitAll()
+                .antMatchers("/users/token").permitAll()
+                .antMatchers(HttpMethod.PATCH, "/users").hasRole(Role.MEMBER.name())
                 .anyRequest()
                 .authenticated()
 
