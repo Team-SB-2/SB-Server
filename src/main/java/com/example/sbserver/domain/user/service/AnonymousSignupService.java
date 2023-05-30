@@ -1,10 +1,10 @@
 package com.example.sbserver.domain.user.service;
 
-import com.example.sbserver.domain.auth.dto.response.AnonymousUserResponse;
 import com.example.sbserver.domain.auth.dto.response.TokenResponse;
-import com.example.sbserver.domain.user.domain.Role;
 import com.example.sbserver.domain.user.domain.User;
 import com.example.sbserver.domain.user.domain.repository.UserRepository;
+import com.example.sbserver.domain.user.exception.UserNotFoundException;
+import com.example.sbserver.domain.user.facade.UserFacade;
 import com.example.sbserver.global.security.jwt.JwtTokenProvider;
 import com.example.sbserver.global.util.password.PasswordUtil;
 import lombok.RequiredArgsConstructor;
@@ -18,24 +18,38 @@ public class AnonymousSignupService {
     private final UserRepository userRepository;
     private final JwtTokenProvider jwtTokenProvider;
     private final PasswordEncoder passwordEncoder;
+    private final UserFacade userFacade;
     private final PasswordUtil passwordUtil;
-    private static int USER_COUNT_NUMBER;
-    private static final String USERNAME = "똑똑이";
+    private static int userCountNumber;
+    private static final String BASE_USERNAME = "똑똑이";
 
     @Transactional
-    public AnonymousUserResponse execute() {
-        USER_COUNT_NUMBER += 1;
-        String newUsername = USERNAME + USER_COUNT_NUMBER;
-        String password = passwordUtil.generateRandomPassword();
-        User user = User.builder()
-                .email(newUsername)
+    public TokenResponse execute() {
+        User user = getUserOrCreateNewUser();
+        return jwtTokenProvider.getToken(user.getEmail(), user.getRole().toString());
+    }
+
+    private User getUserOrCreateNewUser() {
+        try {
+            return userFacade.getCurrentUser();
+        } catch (UserNotFoundException e) {
+            String newUsername = generateNewUsername();
+            String password = passwordUtil.generateRandomPassword();
+            User newUser = createUser(newUsername, password);
+            return userRepository.save(newUser);
+        }
+    }
+
+    private String generateNewUsername() {
+        userCountNumber++;
+        return BASE_USERNAME + userCountNumber;
+    }
+
+    private User createUser(String username, String password) {
+        return User.builder()
+                .email(username)
                 .password(passwordEncoder.encode(password))
-                .name(newUsername)
+                .name(username)
                 .build();
-
-        userRepository.save(user);
-
-        TokenResponse token = jwtTokenProvider.getToken(user.getEmail(), Role.USER.toString());
-        return new AnonymousUserResponse(token, user.getEmail(), password);
     }
 }
