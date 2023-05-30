@@ -1,6 +1,5 @@
 package com.example.sbserver.domain.user.presentation;
 
-import com.example.sbserver.domain.auth.dto.response.AnonymousUserResponse;
 import com.example.sbserver.domain.auth.dto.response.TokenResponse;
 import com.example.sbserver.domain.user.presentation.dto.request.LoginRequest;
 import com.example.sbserver.domain.user.presentation.dto.request.SignUpRequest;
@@ -31,7 +30,7 @@ public class UserController {
     }
 
     @PostMapping("/anonymous")
-    public AnonymousUserResponse anonymousSignUp() {
+    public TokenResponse anonymousSignUp() {
         return anonymousSignupService.execute();
     }
 
