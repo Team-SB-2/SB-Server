@@ -12,6 +12,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.UUID;
+
 @RequiredArgsConstructor
 @Service
 public class AnonymousSignupService {
@@ -47,9 +49,14 @@ public class AnonymousSignupService {
 
     private User createUser(String username, String password) {
         return User.builder()
-                .email(username)
+                .email(generateRandomString())
                 .password(passwordEncoder.encode(password))
                 .name(username)
                 .build();
+    }
+
+    private String generateRandomString() {
+        String uuid = UUID.randomUUID().toString().replace("-", "");
+        return uuid.substring(0, 12);
     }
 }
