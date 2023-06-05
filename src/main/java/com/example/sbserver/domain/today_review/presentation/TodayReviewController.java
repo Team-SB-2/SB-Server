@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.time.LocalDate;
 
 @RequiredArgsConstructor
@@ -18,7 +19,7 @@ public class TodayReviewController {
     private final QueryTodayReviewService queryTodayReviewService;
 
     @PatchMapping("/today-review/{review-id}")
-    public void updateTodayReview(@PathVariable("review-id") Long id, UpdateTodayReviewRequest request) {
+    public void updateTodayReview(@PathVariable("review-id") Long id, @Valid @RequestBody UpdateTodayReviewRequest request) {
         updateTodayReviewService.execute(id, request);
     }
 

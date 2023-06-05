@@ -17,7 +17,7 @@ public class TodayReview {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = 20, nullable = false)
+    @Column(length = 20)
     private String content;
 
     @JoinColumn(name = "user_id")

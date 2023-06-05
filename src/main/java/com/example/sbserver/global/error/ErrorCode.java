@@ -23,6 +23,8 @@ public enum ErrorCode {
 
     USER_NOT_FOUND(404, "User Not Found"),
 
+    RECORD_NOT_FOUND(404, "Record Not Found"),
+
     SUBJECT_NOT_FOUND(404, "Subject Not Found"),
 
     NOTICE_NOT_FOUND(404, "Notice Not Found"),

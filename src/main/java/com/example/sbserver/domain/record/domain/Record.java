@@ -54,4 +54,8 @@ public class Record {
         this.subject = subject;
         this.user = user;
     }
+
+    public void updateMemo(String memo) {
+        this.memo = memo;
+    }
 }
