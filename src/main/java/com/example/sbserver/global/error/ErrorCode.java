@@ -33,6 +33,8 @@ public enum ErrorCode {
 
     REFRESH_TOKEN_NOT_FOUND(404, "RefreshToken Not Found"),
 
+    TODAY_REVIEW_NOT_FOUND(404, "Today Review Not Found"),
+
     EMAIL_EXIST(409, "Email Exist"),
 
     RECORD_EXISTS(409, "Record Exists"),
