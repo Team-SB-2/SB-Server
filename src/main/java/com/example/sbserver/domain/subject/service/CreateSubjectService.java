@@ -24,9 +24,9 @@ public class CreateSubjectService {
     public void execute(CreateSubjectRequest request) {
         User user = userFacade.getCurrentUser();
 
-        if (subjectRepository.countByUserAndIsViewableTrue(user) > SUBJECT_LIMIT) {
-            throw SubjectLimitExceededException.EXCEPTION;
-        }
+//        if (subjectRepository.countByUserAndIsViewableTrue(user) > SUBJECT_LIMIT) {
+//            throw SubjectLimitExceededException.EXCEPTION;
+//        }
 
         if (subjectRepository.existsByTitleAndUser(request.getTitle(), user)) {
             Subject subject = subjectRepository.findByTitle(request.getTitle());
