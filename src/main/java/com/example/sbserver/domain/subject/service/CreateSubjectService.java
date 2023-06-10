@@ -29,7 +29,7 @@ public class CreateSubjectService {
 //        }
 
         if (subjectRepository.existsByTitleAndUser(request.getTitle(), user)) {
-            Subject subject = subjectRepository.findByTitle(request.getTitle());
+            Subject subject = subjectRepository.findByTitleAndUser(request.getTitle(), user);
             if (subject.getIsViewable()) {
                 throw SubjectExistsException.EXCEPTION;
             }
