@@ -10,7 +10,7 @@ public interface SubjectRepository extends CrudRepository<Subject, Long>, Custom
 
     boolean existsByTitleAndUser(String title, User user);
 
-    Subject findByTitle(String title);
+    Subject findByTitleAndUser(String title, User user);
 
     Integer countByUserAndIsViewableTrue(User user);
 }
