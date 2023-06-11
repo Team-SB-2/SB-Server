@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class AnonymousUserResponse {
+public class UserTokenResponse {
     private final TokenResponse tokenResponse;
     private final String email;
     private final String password;

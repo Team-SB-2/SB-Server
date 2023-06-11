@@ -1,6 +1,7 @@
 package com.example.sbserver.domain.user.service;
 
 import com.example.sbserver.domain.auth.dto.response.TokenResponse;
+import com.example.sbserver.domain.auth.dto.response.UserTokenResponse;
 import com.example.sbserver.domain.user.domain.User;
 import com.example.sbserver.domain.user.domain.repository.UserRepository;
 import com.example.sbserver.domain.user.exception.UserNotFoundException;
@@ -26,15 +27,16 @@ public class AnonymousSignupService {
     private static final String BASE_USERNAME = "똑똑이";
 
     @Transactional
-    public TokenResponse execute() {
+    public UserTokenResponse execute() {
         User user = getUserOrCreateNewUser();
-        return jwtTokenProvider.getToken(user.getEmail(), user.getRole().toString());
+        TokenResponse tokenResponse = jwtTokenProvider.getToken(user.getEmail(), user.getRole().toString());
+        return new UserTokenResponse(tokenResponse, user.getEmail(), user.getPassword());
     }
 
     private User getUserOrCreateNewUser() {
         try {
             return userFacade.getCurrentUser();
-        } catch (UserNotFoundException e) {
+        } catch (Exception e) {
             String newUsername = generateNewUsername();
             String password = passwordUtil.generateRandomPassword();
             User newUser = createUser(newUsername, password);

@@ -1,6 +1,7 @@
 package com.example.sbserver.domain.user.service;
 
 import com.example.sbserver.domain.auth.dto.response.TokenResponse;
+import com.example.sbserver.domain.auth.dto.response.UserTokenResponse;
 import com.example.sbserver.domain.user.domain.User;
 import com.example.sbserver.domain.user.domain.repository.UserRepository;
 import com.example.sbserver.domain.user.exception.PasswordMismatchException;
@@ -21,7 +22,7 @@ public class LoginService {
     private final JwtTokenProvider jwtTokenProvider;
 
     @Transactional
-    public TokenResponse execute(LoginRequest request) {
+    public UserTokenResponse execute(LoginRequest request) {
 
         User user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> UserNotFoundException.EXCEPTION);
@@ -29,6 +30,7 @@ public class LoginService {
             throw PasswordMismatchException.EXCEPTION;
         }
 
-        return jwtTokenProvider.getToken(user.getEmail(), user.getRole().toString());
+        TokenResponse tokenResponse = jwtTokenProvider.getToken(user.getEmail(), user.getRole().toString());
+        return new UserTokenResponse(tokenResponse, user.getEmail(), user.getPassword());
     }
 }

@@ -1,6 +1,7 @@
 package com.example.sbserver.domain.user.service;
 
 import com.example.sbserver.domain.auth.dto.response.TokenResponse;
+import com.example.sbserver.domain.auth.dto.response.UserTokenResponse;
 import com.example.sbserver.domain.user.domain.Role;
 import com.example.sbserver.domain.user.domain.User;
 import com.example.sbserver.domain.user.domain.repository.UserRepository;
@@ -23,16 +24,17 @@ public class SignUpService {
     private final JwtTokenProvider jwtTokenProvider;
 
     @Transactional
-    public TokenResponse execute(SignUpRequest request) {
+    public UserTokenResponse execute(SignUpRequest request) {
         User user = userFacade.getCurrentUser();
         if(userRepository.findByEmail(request.getEmail()).isPresent()) {
             throw EmailExistsException.EXCEPTION;
         }
         user.registerAsMember(
-                user.getEmail(), request.getPassword(), request.getName(),
+                user.getEmail(), passwordEncoder.encode(request.getPassword()), request.getName(),
                 request.getAge(), request.getSex(), request.getIsMarketingAgreed()
         );
 
-        return jwtTokenProvider.getToken(request.getEmail(), user.getRole().toString());
+        TokenResponse tokenResponse = jwtTokenProvider.getToken(user.getEmail(), user.getRole().toString());
+        return new UserTokenResponse(tokenResponse, user.getEmail(), user.getPassword());
     }
 }
